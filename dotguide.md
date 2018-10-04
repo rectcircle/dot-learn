@@ -21,33 +21,33 @@ dot用于绘制带有层次的有向图。可以运行于命令行模式、WEB�
 
 * [1 简单图形绘制](#1-简单图形绘制)
 * [2 绘制属性](#2-绘制属性)
-  * [2.1 节点形状](#21-节点形状)
-  * [2.2 标签](#22-标签)
-  * [2.3 HTML-like 标签](#23-html-like-标签)
-  * [2.4 图形样式](#24-图形样式)
-    * [`color`](#color)
-    * [`style`](#style)
-    * [边的箭头](#边的箭头)
-  * [2.5 绘图方向、大小和间隔](#25-绘图方向-大小和间隔)
-  * [2.6 结点与边定位](#26-结点与边定位)
+	* [2.1 节点形状](#21-节点形状)
+	* [2.2 标签](#22-标签)
+	* [2.3 HTML-like 标签](#23-html-like-标签)
+	* [2.4 图形样式](#24-图形样式)
+		* [`color`](#color)
+		* [`style`](#style)
+		* [边的箭头](#边的箭头)
+	* [2.5 绘图方向、大小和间隔](#25-绘图方向-大小和间隔)
+	* [2.6 结点与边定位](#26-结点与边定位)
 * [3 高级特性](#3-高级特性)
-  * [3.1 结点端口](#31-结点端口)
-  * [3.2 Clusters](#32-clusters)
-  * [3.3 Concentrators集中器](#33-concentrators集中器)
+	* [3.1 结点端口](#31-结点端口)
+	* [3.2 Clusters](#32-clusters)
+	* [3.3 Concentrators集中器](#33-concentrators集中器)
 * [4 命令行参数](#4-命令行参数)
 * [5 杂项](#5-杂项)
 * [6 总结](#6-总结)
 * [7 致谢](#7-致谢)
 * [引用](#引用)
 * [附录](#附录)
-  * [A 节点主要属性](#a-节点主要属性)
-  * [B 边主要属性](#b-边主要属性)
-  * [C 图主要属性](#c-图主要属性)
-  * [D、E、F](#d-e-f)
-  * [G Layers](#g-layers)
-  * [H 形状](#h-形状)
-  * [I 箭头类型](#i-箭头类型)
-  * [J 颜色名](#j-颜色名)
+	* [A 节点主要属性](#a-节点主要属性)
+	* [B 边主要属性](#b-边主要属性)
+	* [C 图主要属性](#c-图主要属性)
+	* [D、E、F](#d-e-f)
+	* [G Layers](#g-layers)
+	* [H 形状](#h-形状)
+	* [I 箭头类型](#i-箭头类型)
+	* [J 颜色名](#j-颜色名)
 
 <!-- /code_chunk_output -->
 
@@ -74,6 +74,19 @@ dot主要包含三种对象：图、节点、边
 * 符号与词汇，之间使用空格分割
 * 首次出现的词汇为节点，如`main`
 * `->` 表是一个有箭头的边
+
+```dot {code_block=true}
+digraph G {
+    main -> parse -> execute;
+    main -> init;
+    main -> cleanup;
+    execute -> make_string;
+    execute -> printf;
+    init -> make_string;
+    main -> printf;
+    execute -> compare;
+}
+```
 
 ```dot
 digraph G {
@@ -108,7 +121,7 @@ http://www.graphviz.org/doc/info/attrs.html)
 * `edge [color=red];` edge是个保留字，修改边的默认属性，仅对之后的元素生效
 * `node [shape=box, style=filled, color=".7 .3 1.0"];` node是个保留字，修改节点的默认属性，仅对之后的元素生效
 
-```dot
+```dot {code_block=true}
 digraph G {
     size="4,4";
     main [shape=box]; /*注释*/
@@ -154,7 +167,7 @@ digraph G {
 * `d` 为三角形
 * `e` 为梯形
 
-```dot
+```dot {code_block=true}
 digraph G {
     a->b->c;
     b->d;
@@ -188,7 +201,7 @@ digraph G {
 
 例子4 records 与 label
 
-```dot
+```dot {code_block=true}
 digraph G {
   node [shape = record];
   father [label = "<l> left|<m> mid\dle|<r> right"];
@@ -205,7 +218,7 @@ digraph G {
 
 例子5  HTML-like labels
 
-```dot
+```dot {code_block=true}
 digraph html {
   abc [shape = none, margin = 0, label =< 
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
@@ -304,7 +317,7 @@ digraph html {
 * 一个`{}`代表一个子图
 * `{rank="same";}` 表示该子图排列和父图一致
 
-```dot
+```dot {code_block=true}
 digraph asde91 {
   ranksep=.75; size = "7.5,7.5";
   {
@@ -375,7 +388,7 @@ digraph asde91 {
 
 例子7 二叉树
 
-```dot
+```dot {code_block=true}
 digraph g {
   node [shape = record,height=.1];
   node0[label = "<f0> |<f1> G|<f2> "];
@@ -400,7 +413,7 @@ digraph g {
 
 例子9 Hash表
 
-```dot
+```dot {code_block=true}
 digraph G {
   nodesep=.05;
   rankdir=LR;
@@ -432,7 +445,7 @@ cluster的绘制通过递归技术，计算分配的rank和内部结点的布局
 
 例子10
 
-```dot
+```dot {code_block=true}
 digraph G {
   /*clusterrank=none;*/
   subgraph cluster0 {
@@ -462,7 +475,7 @@ digraph G {
 
 例子11
 
-```dot
+```dot {code_block=true}
 digraph G {
   size="8,6"; ratio=fill; node[fontsize=24];
   ciafan->computefan; fan->increment; computefan->fan; stringdup->fatal;
@@ -492,7 +505,7 @@ digraph G {
 
 例子12
 
-```dot
+```dot {code_block=true}
 digraph G {
   compound=true;
   subgraph cluster0 {
@@ -519,9 +532,20 @@ digraph G {
 
 例子13
 
-```dot
+```dot {code_block=true}
 digraph G {
   concentrate=true;
+  a -> a
+  a -> b
+  a -> b;
+  a -> c;
+  a -> d;
+}
+```
+
+```dot {code_block=true}
+digraph G {
+  #concentrate=true;
   a -> a
   a -> b
   a -> b;
